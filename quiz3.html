@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPH</title>
+    <style>
+        *{
+            font-family: helvetica, sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+        .container{
+            background-color: black;
+            height: 76px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .container img{
+            width: 168px;
+            padding: 20px;
+        }
+        .link {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+        }
+        .link ul{
+            list-style-type: none;
+            display: flex;
+            flex-direction: row;
+            padding-right: 20px;
+            font-weight: 600;
+        }
+        .language-selector a{
+            text-decoration: none;
+            color: grey;
+            padding: 10px 15px;
+            font-size: 12px;
+        }
+        .language-selector a:hover{
+            color: white;
+        }
+        .language-selector::after{
+            color: white;
+        }
+        .language-selector{
+            display: flex;
+            align-items: center;
+        }
+        .lang-divider{
+            background-color: white;
+            width: 1px;
+            height:15px;
+            margin: 0 10px;
+        }
+        #daftar{
+            text-decoration: none;
+            color: black;
+            padding: 10px 15px;
+            font-size: 15px;
+            background-color: white;
+            font-weight: 600;
+            border-radius: 4px;
+            border: 1px solid transparent;
+        }
+        #daftar:hover{
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+        }
+        .link img{
+            width: 32px;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="#"><img src="UPH-Single-Color-White-Full.png" alt=""></a>
+        <div class="link">
+            <ul class="language-selector">
+                <li><a href="#">EN</a></li>
+                <li class="lang-divider"></li>
+                <li><a href="#" style="color: white;">ID</a></li>
+            </ul>
+            <a href="#" id="daftar">DAFTAR SEKARANG</a>
+            <img src="menu-2.png" alt="">
+        </div>
+    </div>
+</body>
+</html>

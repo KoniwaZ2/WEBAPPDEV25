@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Quiz 1</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f6fb;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .home {
+            background-color: #fff;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            margin: 40px auto 0 auto;
+            width: 80%;
+            padding: 32px 0;
+        }
+        p {
+            overflow-wrap: break-word;
+        
+        }
+        .items {
+            border-radius: 8px;
+            padding: 20px;
+            width: 220px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            gap: 10px;
+        }
+        .items2 {
+            background-color: rgba(178, 159, 124, 0.3);
+            border-radius: 8px;
+            padding: 20px 20px 64px 20px;
+            width: 220px;
+            height: 200px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+        .items2-img-row {
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+            min-height: 32px;
+        }
+            text-align: left;
+            gap: 10px;
+            position: relative;
+        }
+        .items2 img {
+            margin-top: auto;
+            align-self: flex-start;
+            width: 40px;
+            height: auto;
+        }
+        
+        .icon-above {
+            margin-bottom: 10px;
+            display: block;
+        }
+        .icon-side {
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        h3{
+            margin: 0;
+        }
+        .head{
+            font-size: 2.5em;
+            color: rgb(255, 201, 102);
+            font-weight: 400;
+            margin: 0px;
+
+            
+        }
+        .desc{
+            margin-top: 0px;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        .items2 img, .items2 svg {
+            background: none !important;
+            box-shadow: none !important;
+            width: 120px;
+            height: 120px;
+        }
+    </style>
+</head>
+<body>
+    <div class="home">
+            <div class="items">
+                <img class="icon-above" src="/Users/victormarlino/Downloads/compressed/terminal.svg" alt="Program" width="30">
+                <h3>Developer-first</h3>
+                <p>Open-source SDKs with industry‑leading accuracy, simple documentation, flexible APIs, and turnkey integrations.</p>
+            </div>
+            <div class="items">
+                <img class="icon-above" src="/Users/victormarlino/Downloads/compressed/equalizer.svg" alt="Design" width="30">
+                <h3>Extensible</h3>
+                <p>Build location‑based experiences across the customer journey, from messaging to curbside pickup to address autocomplete.</p>
+            </div>
+            <div class="items">
+                <img class="icon-above" src="/Users/victormarlino/Downloads/compressed/growth.svg" alt="Analytics" width="30">
+                <h3>Enterprise-ready</h3>
+                <p>Built for scale, processing 100B+ locations per year from 100M+ devices with enterprise‑grade security, privacy, and support.</p>
+            </div>
+    </div>
+    <div class="home" style="font-family: montserrat;">
+        <div class="items2">
+            <p class="head">$33M</p>
+            <p class="desc">Trackable revenue generated across our portofolio</p>
+            <div class="items2-img-row">
+                <img src="/Users/victormarlino/Downloads/compressed/money.svg" alt="" />
+            </div>
+        </div>
+        <div class="items2">
+            <p class="head">220%</p>
+            <p class="desc">Average yearly growth rate across our clients</p>
+            <div class="items2-img-row">
+                <img src="/Users/victormarlino/Downloads/compressed/rose.svg" alt="" />
+            </div>
+        </div>
+        <div class="items2">
+            <p class="head">4x</p>
+            <p class="desc">Increase in client creative output on average</p>
+            <div class="items2-img-row">
+                <img src="/Users/victormarlino/Downloads/compressed/content.svg" alt="" />
+            </div>
+        </div>
+    </div>
+</body>
+</html>
