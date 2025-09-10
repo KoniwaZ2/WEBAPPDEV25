@@ -1,0 +1,17 @@
+body {
+  background-color: rgb(232, 235, 236);
+}
+.form-custom {
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding: 0 10px;
+  font-size: 0.9rem;
+  height: 40px;
+  border-radius: 10px;
+}
+.btn-custom {
+  width: 100%;
+  margin-top: 1rem;
+  background-color: rgb(0, 62, 119);
+  border-radius: 10px;
+}

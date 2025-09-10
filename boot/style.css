@@ -1,0 +1,138 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  line-height: 1.6;
+}
+
+.hero {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.btn-custom {
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  border-radius: 25px;
+  transition: transform 0.3s ease;
+}
+
+.btn-custom:hover {
+  transform: translate(-2px);
+}
+
+.features {
+  padding: 80px 0;
+  background-color: #f8f9fa;
+}
+
+.feature-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  height: 100%;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 2rem;
+  color: white;
+}
+
+.about {
+  padding: 80px 0px;
+}
+
+.about img {
+  border-radius: 10px;
+  box-shadow: 0 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 40px 0;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .features {
+    padding: 60px 0;
+  }
+
+  .about {
+    padding: 60px 0;
+  }
+
+  .feature-card {
+    margin-bottom: 2rem;
+  }
+}
+@media (max-width: 576px) {
+  .hero {
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .hero p {
+    font-size: 0.9rem;
+  }
+  .btn-custom {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+  .features {
+    padding: 40px 0;
+  }
+  .about {
+    padding: 40px 0;
+  }
+}
+@media (max-width: 480px) {
+  .container {
+    padding: 0 15px;
+  }
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  .feature-card {
+    font-size: 1.5rem;
+  }
+}
