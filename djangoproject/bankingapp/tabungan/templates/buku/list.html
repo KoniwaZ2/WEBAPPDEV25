@@ -2,7 +2,8 @@
 
 {% for buku in list_buku %}
     <li>{{ buku.nama_nasabah }} &nbsp &nbsp <a href="/tabungan/buku/update/{{ buku.id }}">Edit</a>
-    &nbsp &nbsp <a href="/tabungan/buku/delete/{{ buku.id }}">Delete</a></li>
+    &nbsp &nbsp <a href="/tabungan/buku/delete/{{ buku.id }}">Delete</a>
+    &nbsp &nbsp <a href="/tabungan/buku/transaksi/{{ buku.id }}">Transaksi</a></li>
 {% empty %}
     <p>No Buku found.</p>
 {% endfor %}

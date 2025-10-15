@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Buku
-from .forms import BukuTabungan
+from django.db.models import Sum, Q
+from .models import Buku, Transaksi
+from .forms import BukuTabungan, TransaksiForm
 
 
 def list_buku(request):
@@ -38,3 +39,26 @@ def delete_buku(request, buku_id):
         return HttpResponseRedirect(reverse('tabungan:list-buku'))
     context = {'obj': obj}
     return render(request, 'buku/delete.html', context)
+
+def transaksi(request, buku_id):
+    obj = get_object_or_404(Buku, id=buku_id)
+    form = TransaksiForm(request.POST or None)
+    if form.is_valid():
+        transaksi_obj = form.save(commit=False)
+        transaksi_obj.buku = obj
+        transaksi_obj.save()
+        return HttpResponseRedirect(reverse('tabungan:transaksi', args=[buku_id]))
+    totals = obj.transaksi.aggregate(
+        total_debit=Sum('jumlah', filter=Q(jenis_transaksi='debit')),
+        total_credit=Sum('jumlah', filter=Q(jenis_transaksi='credit')),
+    )
+    total_debit = totals.get('total_debit') or 0
+    total_credit = totals.get('total_credit') or 0
+
+    context = {
+        'form': form,
+        'obj': obj,
+        'total_debit': total_debit,
+        'total_credit': total_credit,
+    }
+    return render(request, 'buku/transaksi.html', context)

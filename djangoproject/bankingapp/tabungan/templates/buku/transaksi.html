@@ -1,0 +1,31 @@
+<div>
+    <h3>Transaksi untuk: {{ obj.nama_nasabah }}</h3>
+    <p>Total Masuk (Debit): {{ total_debit }}</p>
+    <p>Total Keluar (Credit): {{ total_credit }}</p>
+    <table border="1">
+        <tr>
+            <th>Tanggal</th>
+            <th>Jenis Transaksi</th>
+            <th>Jumlah</th>
+        </tr>
+        {% for transaksi in obj.transaksi.all %}
+        <tr>
+            <td>{{ transaksi.tanggal }}</td>
+            <td>{{ transaksi.jenis_transaksi }}</td>
+            <td>{{ transaksi.jumlah }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No transactions found.</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <hr>
+    Tambah Transaksi :
+    <br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+</div>

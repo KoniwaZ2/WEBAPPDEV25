@@ -7,4 +7,5 @@ urlpatterns = [
     path('buku/create', views.create_buku, name='create-buku'),
     path('buku/update/<int:buku_id>/', views.update_buku, name='update-buku'),
     path('buku/delete/<int:buku_id>/', views.delete_buku, name='delete-buku'),
+    path('buku/transaksi/<int:buku_id>/', views.transaksi, name='transaksi'),
 ]
