@@ -1,0 +1,10 @@
+<p>List Buku</p>
+
+{% for buku in list_buku %}
+    <li>{{ buku.nama_nasabah }} &nbsp &nbsp <a href="/tabungan/buku/update/{{ buku.id }}">Edit</a>
+    &nbsp &nbsp <a href="/tabungan/buku/delete/{{ buku.id }}">Delete</a></li>
+{% empty %}
+    <p>No Buku found.</p>
+{% endfor %}
+<br><br>
+<a href="/tabungan/buku/create">+ Tambahkan Data</a>
