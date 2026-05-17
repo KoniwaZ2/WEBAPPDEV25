@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Login | Flatkit</title>
+  <meta name="description" content="Flatkit Django Version - Login Page" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- Icons & Meta -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+  <link rel="apple-touch-icon" href="{% static 'assets/images/logo.png' %}">
+  <meta name="apple-mobile-web-app-title" content="Flatkit">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" sizes="196x196" href="{% static 'assets/images/logo.png' %}">
+
+  <!-- ✅ CSS FILES -->
+  <link rel="stylesheet" href="{% static 'assets/animate.css/animate.min.css' %}" type="text/css" />
+  <link rel="stylesheet" href="{% static 'assets/glyphicons/glyphicons.css' %}" type="text/css" />
+  <link rel="stylesheet" href="{% static 'assets/font-awesome/css/font-awesome.min.css' %}" type="text/css" />
+  <link rel="stylesheet" href="{% static 'assets/material-design-icons/material-design-icons.css' %}" type="text/css" />
+  <link rel="stylesheet" href="{% static 'assets/bootstrap/dist/css/bootstrap.min.css' %}" type="text/css" />
+  <link rel="stylesheet" href="{% static 'assets/styles/app.css' %}" type="text/css" />
+  <link rel="stylesheet" href="{% static 'assets/styles/font.css' %}" type="text/css" />
+</head>
+
+<body>
+  <div class="app" id="app">
+
+    <!-- ############ LAYOUT START ############ -->
+    <div class="center-block w-xxl w-auto-xs p-y-md">
+      <div class="navbar">
+        <div class="pull-center text-center">
+          <img src="{% static 'assets/images/logo.png' %}" style="height:40px;" alt="Flatkit">
+        </div>
+      </div>
+
+      <div class="p-a-md box-color r box-shadow-z1 text-color m-a">
+        <div class="m-b text-sm text-center">
+          <strong>Sign in with your Flatkit Account</strong>
+        </div>
+
+        <!-- ✅ Django Login Form -->
+        <form method="POST">
+          {% csrf_token %}
+          {% if messages %}
+            {% for m in messages %}
+              <div class="alert alert-{{ m.tags }}">{{ m }}</div>
+            {% endfor %}
+          {% endif %}
+
+          <div class="md-form-group float-label">
+            <input type="text" name="username" class="md-input form-control" required>
+            <label>Email</label>
+          </div>
+
+          <div class="md-form-group float-label">
+            <input type="password" name="password" class="md-input form-control" required>
+            <label>Password</label>
+          </div>      
+
+          <div class="m-b-md">        
+            <label class="md-check">
+              <input type="checkbox"><i class="primary"></i> Keep me signed in
+            </label>
+          </div>
+
+          <button type="submit" class="btn primary btn-block p-x-md">Sign in</button>
+        </form>
+      </div>
+
+      <div class="p-v-lg text-center">
+        <div class="m-b">
+          <a href="#" class="text-primary _600">Forgot password?</a>
+        </div>
+        <div>
+          Do not have an account?
+          <a href="{% url 'signup' %}" class="text-primary _600">Sign up</a>
+        </div>
+      </div>
+    </div>
+    <!-- ############ LAYOUT END ############ -->
+  </div>
+
+  <!-- ✅ JS FILES -->
+  <script src="{% static 'libs/jquery/jquery/dist/jquery.js' %}"></script>
+  <script src="{% static 'libs/jquery/tether/dist/js/tether.min.js' %}"></script>
+  <script src="{% static 'libs/jquery/bootstrap/dist/js/bootstrap.js' %}"></script>
+  <script src="{% static 'libs/jquery/underscore/underscore-min.js' %}"></script>
+  <script src="{% static 'libs/jquery/jQuery-Storage-API/jquery.storageapi.min.js' %}"></script>
+  <script src="{% static 'libs/jquery/PACE/pace.min.js' %}"></script>
+  <script src="{% static 'assets/scripts/palette.js' %}"></script>
+  <script src="{% static 'assets/scripts/ui-load.js' %}"></script>
+  <script src="{% static 'assets/scripts/ui-jp.js' %}"></script>
+  <script src="{% static 'assets/scripts/ui-device.js' %}"></script>
+  <script src="{% static 'assets/scripts/ui-form.js' %}"></script>
+  <script src="{% static 'assets/scripts/ui-nav.js' %}"></script>
+  <script src="{% static 'assets/scripts/ui-screenfull.js' %}"></script>
+  <script src="{% static 'assets/scripts/ui-scroll-to.js' %}"></script>
+  <script src="{% static 'assets/scripts/ui-toggle-class.js' %}"></script>
+  <script src="{% static 'assets/scripts/app.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Berita</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .back-btn {
+            background: #6c757d;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 30px;
+            transition: transform 0.2s;
+            font-weight: bold;
+        }
+        .back-btn:hover {
+            transform: scale(1.05);
+            background: #5a6268;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 2.2em;
+            line-height: 1.3;
+        }
+        .meta {
+            color: #666;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            font-size: 0.95em;
+        }
+        img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        .content {
+            color: #444;
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            text-align: justify;
+        }
+        .komentar-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 3px solid #667eea;
+        }
+        .komentar-section h3 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+        .komentar-item {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s;
+        }
+        .komentar-item:hover {
+            transform: translateX(5px);
+        }
+        .komentar-item strong {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+        .komentar-item small {
+            color: #666;
+            font-size: 0.85em;
+        }
+        .komentar-item p {
+            margin-top: 10px;
+            color: #333;
+            line-height: 1.6;
+        }
+        .no-komentar {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+            font-style: italic;
+        }
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #667eea;
+            font-size: 1.3em;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.6em;
+            }
+            .content {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/api/html/berita/" class="back-btn">← Kembali ke Daftar Berita</a>
+        
+        <div id="berita-detail">
+            <div class="loading">⏳ Memuat detail berita...</div>
+        </div>
+    </div>
+
+    <script>
+        const beritaId = {{ berita_id }};
+        
+        // Fetch detail berita dari API
+        fetch(`/api/detail/berita/${beritaId}/`)
+            .then(response => response.json())
+            .then(berita => {
+                const container = document.getElementById('berita-detail');
+                
+                let komentarHTML = '';
+                if (berita.komentar && berita.komentar.length > 0) {
+                    komentarHTML = `
+                        <div class="komentar-section">
+                            <h3>💬 Komentar (${berita.komentar.length})</h3>
+                    `;
+                    berita.komentar.forEach(komentar => {
+                        komentarHTML += `
+                            <div class="komentar-item">
+                                <div>
+                                    <strong>👤 ${komentar.nama}</strong> 
+                                    <small>• ${new Date(komentar.tanggal).toLocaleString('id-ID', {
+                                        weekday: 'long',
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    })}</small>
+                                </div>
+                                <p>${komentar.isi_komentar}</p>
+                            </div>
+                        `;
+                    });
+                    komentarHTML += '</div>';
+                } else {
+                    komentarHTML = `
+                        <div class="komentar-section">
+                            <h3>💬 Komentar</h3>
+                            <div class="no-komentar">💭 Belum ada komentar untuk berita ini.</div>
+                        </div>
+                    `;
+                }
+                
+                container.innerHTML = `
+                    <h1>${berita.judul}</h1>
+                    <div class="meta">
+                        📅 ${new Date(berita.tanggal).toLocaleString('id-ID', {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        })}
+                    </div>
+                    ${berita.gambar ? `<img src="${berita.gambar}" alt="${berita.judul}">` : ''}
+                    <div class="content">${berita.isi_berita}</div>
+                    ${komentarHTML}
+                `;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('berita-detail').innerHTML = 
+                    '<div class="loading">❌ Gagal memuat detail berita.</div>';
+            });
+    </script>
+</body>
+</html>

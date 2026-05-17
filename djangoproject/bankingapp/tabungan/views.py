@@ -4,7 +4,18 @@ from django.urls import reverse
 from django.db.models import Sum, Q
 from .models import Buku, Transaksi
 from .forms import BukuTabungan, TransaksiForm
+from rest_framework import permissions, viewsets
 
+from tabungan.serializers import BukuSerializer, TransaksiSerializer
+from tabungan.models import Buku
+
+class BukuViewSet(viewsets.ModelViewSet):
+    queryset = Buku.objects.all()
+    serializer_class = BukuSerializer
+
+class TransaksiViewSet(viewsets.ModelViewSet):
+    queryset = Transaksi.objects.all()
+    serializer_class = TransaksiSerializer
 
 def list_buku(request):
     #query db

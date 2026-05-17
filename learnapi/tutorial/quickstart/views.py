@@ -7,81 +7,27 @@ from django.db.models import Q
 from quickstart.serializers import BukuSerializer, SiswaSerializer, ProdiSerializer, KuliahSerializer, RegistrasiSerializer
 from quickstart.models import Buku, Siswa, Prodi, Kuliah, Registrasi
 
+from django_filters import rest_framework as filters
 
-# @api_view(['GET'])
-# def api_root(request, format=None):
-#     """
-#     Custom API Root yang menampilkan semua endpoint termasuk filter custom dengan data dari database
-#     """
-#     # Ambil data aktual dari database
-#     prodi_list = Prodi.objects.all().values_list('nama_prodi', flat=True)[:5]  # Ambil 5 prodi pertama
-#     matkul_list = Kuliah.objects.all().values_list('matkul', flat=True)[:5]    # Ambil 5 matkul pertama
-    
-#     # Generate contoh URL berdasarkan data aktual
-#     prodi_matkul_examples = []
-#     prodi_examples = []
-#     matkul_examples = []
-    
-#     # Ambil kombinasi prodi-matkul yang benar-benar ada registrasinya
-#     registrasi_sample = Registrasi.objects.select_related(
-#         'siswa__prodi', 'kuliah'
-#     ).distinct()[:3]
-    
-#     for reg in registrasi_sample:
-#         prodi_matkul_examples.append(
-#             request.build_absolute_uri(
-#                 f'/api/filter/prodi/{reg.siswa.prodi.nama_prodi}/matkul/{reg.kuliah.matkul}/'
-#             )
-#         )
-    
-#     # Contoh filter by prodi
-#     for prodi in prodi_list[:3]:
-#         prodi_examples.append(
-#             request.build_absolute_uri(f'/api/filter/prodi/{prodi}/')
-#         )
-    
-#     # Contoh filter by matkul
-#     for matkul in matkul_list[:3]:
-#         matkul_examples.append(
-#             request.build_absolute_uri(f'/api/filter/matkul/{matkul}/')
-#         )
-    
-#     return Response({
-#         'buku': reverse('buku-list', request=request, format=format),
-#         'siswa': reverse('siswa-list', request=request, format=format),
-#         'prodi': reverse('prodi-list', request=request, format=format),
-#         'kuliah': reverse('kuliah-list', request=request, format=format),
-#         'registrasi': reverse('registrasi-list', request=request, format=format),
-#         'filter': {
-#             'filter-by-prodi-and-matkul': {
-#                 'description': 'Filter siswa berdasarkan prodi DAN mata kuliah',
-#                 'format': '/api/filter/prodi/<prodi_name>/matkul/<matkul_name>/',
-#                 'prodi_tersedia': list(prodi_list),
-#                 'matkul_tersedia': list(matkul_list),
-#                 'contoh_url': prodi_matkul_examples if prodi_matkul_examples else ['Belum ada data registrasi']
-#             },
-#             'filter-by-prodi': {
-#                 'description': 'Filter siswa berdasarkan prodi saja',
-#                 'format': '/api/filter/prodi/<prodi_name>/',
-#                 'prodi_tersedia': list(prodi_list),
-#                 'contoh_url': prodi_examples if prodi_examples else ['Belum ada data prodi']
-#             },
-#             'filter-by-matkul': {
-#                 'description': 'Filter siswa berdasarkan mata kuliah saja',
-#                 'format': '/api/filter/matkul/<matkul_name>/',
-#                 'matkul_tersedia': list(matkul_list),
-#                 'contoh_url': matkul_examples if matkul_examples else ['Belum ada data mata kuliah']
-#             }
-#         },
-#         'statistik': {
-#             'total_siswa': Siswa.objects.count(),
-#             'total_prodi': Prodi.objects.count(),
-#             'total_kuliah': Kuliah.objects.count(),
-#             'total_registrasi': Registrasi.objects.count(),
-#             'total_buku': Buku.objects.count(),
-#         }
-#     })
+class MahasiswaFilter(filters.FilterSet):
+    prodi = filters.CharFilter(
+        field_name="prodi__nama_prodi", 
+        lookup_expr='icontains',
+        label='Prodi nama prodi contains'
+    )
+    matkul = filters.CharFilter(
+        method='filter_by_matkul',
+        label='Mata Kuliah contains'
+    )
 
+    class Meta:
+        model = Siswa
+        fields = ['prodi', 'matkul']
+
+    def filter_by_matkul(self, queryset, name, value):
+        return queryset.filter(
+            registrasi__kuliah__matkul__icontains=value
+        ).distinct()
 
 class BukuViewSet(viewsets.ModelViewSet):
     queryset = Buku.objects.all()
@@ -102,6 +48,11 @@ class KuliahViewSet(viewsets.ModelViewSet):
 class RegistrasiViewSet(viewsets.ModelViewSet):
     queryset = Registrasi.objects.all()
     serializer_class = RegistrasiSerializer
+
+class MahasiswaFilterViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Siswa.objects.all()
+    serializer_class = SiswaSerializer
+    filterset_class = MahasiswaFilter
 
 @api_view(['GET'])
 def filter_siswa_by_prodi_matkul(request, prodi_name, matkul_name):

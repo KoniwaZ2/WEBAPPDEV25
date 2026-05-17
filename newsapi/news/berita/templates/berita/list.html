@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Berita</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.5em;
+        }
+        .search-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .search-form input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        .search-form input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .search-form button {
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .search-form button:hover {
+            background: #5568d3;
+        }
+        .search-form a {
+            padding: 12px 20px;
+            background: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        .search-form a:hover {
+            background: #5a6268;
+        }
+        .berita-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        .berita-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background: white;
+        }
+        .berita-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .berita-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .berita-content {
+            padding: 20px;
+        }
+        .berita-item h2 {
+            color: #333;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+        .berita-item p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: transform 0.2s;
+            font-weight: bold;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+            font-size: 1.2em;
+        }
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        @media (max-width: 768px) {
+            .berita-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📰 Portal Berita Terkini</h1>
+        
+        <div class="search-form">
+            <input type="text" id="searchInput" placeholder="Cari berita berdasarkan judul..." />
+            <button onclick="searchBerita()">🔍 Cari</button>
+            <a href="#" onclick="resetSearch(); return false;">🔄 Reset</a>
+        </div>
+        
+        <div id="berita-container" class="berita-grid">
+            <div class="loading">⏳ Memuat berita...</div>
+        </div>
+    </div>
+
+    <script>
+        let allBerita = [];
+        
+        // Fetch data dari API saat halaman load
+        function loadBerita() {
+            fetch('/api/berita/')
+                .then(response => response.json())
+                .then(data => {
+                    allBerita = data;
+                    displayBerita(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('berita-container').innerHTML = 
+                        '<div class="no-results">❌ Gagal memuat data berita.</div>';
+                });
+        }
+        
+        // Tampilkan berita
+        function displayBerita(beritaList) {
+            const container = document.getElementById('berita-container');
+            
+            if (beritaList.length === 0) {
+                container.innerHTML = '<div class="no-results">🔍 Tidak ada berita yang ditemukan.</div>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            beritaList.forEach(berita => {
+                const beritaDiv = document.createElement('div');
+                beritaDiv.className = 'berita-item';
+                
+                beritaDiv.innerHTML = `
+                    ${berita.gambar ? `<img src="${berita.gambar}" alt="${berita.judul}">` : ''}
+                    <div class="berita-content">
+                        <h2>${berita.judul}</h2>
+                        <p>📅 ${new Date(berita.tanggal).toLocaleDateString('id-ID', {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        })}</p>
+                        <a href="/api/detail/html/berita/${berita.id}/" class="btn">Baca Selengkapnya →</a>
+                    </div>
+                `;
+                
+                container.appendChild(beritaDiv);
+            });
+        }
+        
+        // Search berita
+        function searchBerita() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (query === '') {
+                displayBerita(allBerita);
+                return;
+            }
+            
+            // Filter berita berdasarkan judul
+            const filtered = allBerita.filter(berita => 
+                berita.judul.toLowerCase().includes(query)
+            );
+            
+            displayBerita(filtered);
+        }
+        
+        // Reset search
+        function resetSearch() {
+            document.getElementById('searchInput').value = '';
+            displayBerita(allBerita);
+        }
+        
+        // Event listener untuk Enter key
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchBerita();
+            }
+        });
+        
+        // Load berita saat halaman dimuat
+        loadBerita();
+    </script>
+</body>
+</html>

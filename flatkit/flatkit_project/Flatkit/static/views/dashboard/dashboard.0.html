@@ -1,0 +1,182 @@
+<!-- Dashboard Main Content -->
+<div class="padding">
+  <div class="row">
+    <div class="col-sm-6 col-md-3">
+      <div class="box p-a text-center">
+        <i class="fa fa-heart text-2x text-danger m-b-sm"></i>
+        <h4 class="m-0 text-md _600">7530</h4>
+        <small class="text-muted">Likes</small>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="box p-a text-center">
+        <i class="fa fa-comments text-2x text-info m-b-sm"></i>
+        <h4 class="m-0 text-md _600">2980</h4>
+        <small class="text-muted">Comments</small>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="box p-a text-center">
+        <i class="fa fa-photo text-2x text-accent m-b-sm"></i>
+        <h4 class="m-0 text-md _600">630</h4>
+        <small class="text-muted">Photos</small>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="box p-a text-center">
+        <i class="fa fa-video-camera text-2x text-success m-b-sm"></i>
+        <h4 class="m-0 text-md _600">750</h4>
+        <small class="text-muted">Videos</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="box">
+        <div class="box-header">
+          <h3>Activities</h3>
+          <small>Your last activity is posted 4 hours ago</small>
+        </div>
+        <div class="box-body">
+          <canvas id="chart-line" height="150"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="box dark">
+        <div class="box-header">
+          <h3>Reports</h3>
+        </div>
+        <div class="box-body">
+          <p>Dales nisi nec adipiscing elit. Morbi id neque quam. Quisque laoreet velit nec lorem tincidunt...</p>
+          <a href="#" class="btn btn-sm btn-outline b-white text-white">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 col-lg-4">
+      <div class="box">
+        <div class="box-header">
+          <h3>Your tasks</h3>
+          <small>Calculated in last 7 days</small>
+        </div>
+        <div class="box-body text-center">
+          <div class="row no-gutter">
+            <div class="col-xs-6">
+              <div ui-jp="easyPieChart" ui-options="{percent: 55, lineWidth: 6, barColor: '#23b7e5', trackColor: '#edf2f6'}">
+                <span class="text-primary h3">55%</span>
+                <div class="m-t-sm">Finished</div>
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <div ui-jp="easyPieChart" ui-options="{percent: 45, lineWidth: 6, barColor: '#f8ac59', trackColor: '#edf2f6'}">
+                <span class="text-warning h3">45%</span>
+                <div class="m-t-sm">Remaining</div>
+              </div>
+            </div>
+          </div>
+          <div class="m-t"><a href="#" class="btn btn-sm btn-outline b-primary">Manage</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="box">
+        <div class="box-header">
+          <h3>Your projects</h3>
+          <small>Calculated in last 30 days</small>
+        </div>
+        <div class="box-body">
+          <canvas id="chart-area" height="150"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="box">
+        <div class="box-header">
+          <h3>Your Sales</h3>
+          <small>A general overview of your sales</small>
+        </div>
+        <div class="box-body">
+          <canvas id="chart-bar" height="150"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx1 = document.getElementById('chart-line').getContext('2d');
+  new Chart(ctx1, {
+    type: 'line',
+    data: {
+      labels: ['1.0', '2.0', '3.0', '4.0', '5.0', '6.0', '7.0'],
+      datasets: [
+        {
+          label: 'Visitors',
+          borderColor: '#23b7e5',
+          backgroundColor: 'rgba(35,183,229,0.1)',
+          data: [5, 5.5, 6, 6.2, 6.7, 7.5, 8.2],
+          tension: 0.3,
+          fill: true
+        },
+        {
+          label: 'Reports',
+          borderColor: '#7266ba',
+          backgroundColor: 'rgba(114,102,186,0.1)',
+          data: [5, 5.2, 5.6, 5.9, 6.1, 6.4, 6.8],
+          tension: 0.3,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: false } }
+    }
+  });
+
+  const ctx2 = document.getElementById('chart-area').getContext('2d');
+  new Chart(ctx2, {
+    type: 'line',
+    data: {
+      labels: ['1.0', '2.0', '3.0', '4.0', '5.0', '6.0', '7.0'],
+      datasets: [{
+        label: 'Projects',
+        borderColor: '#23b7e5',
+        backgroundColor: 'rgba(35,183,229,0.2)',
+        data: [3, 4, 6, 4.5, 5, 3.5, 4],
+        tension: 0.4,
+        fill: true
+      }]
+    },
+    options: { plugins: { legend: { display: false } } }
+  });
+
+  const ctx3 = document.getElementById('chart-bar').getContext('2d');
+  new Chart(ctx3, {
+    type: 'bar',
+    data: {
+      labels: ['1','2','3','4','5','6','7','8'],
+      datasets: [
+        {
+          label: 'Sales',
+          backgroundColor: '#23b7e5',
+          data: [2,3,4,6,5,7,5,4]
+        },
+        {
+          label: 'Profit',
+          backgroundColor: '#f8ac59',
+          data: [1,2,3,3,2,4,3,2]
+        }
+      ]
+    },
+    options: { plugins: { legend: { display: false } } }
+  });
+</script>

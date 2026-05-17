@@ -1,0 +1,17 @@
+<h1>{{ berita.judul }}</h1>
+<p>Tanggal: {{ berita.tanggal }}</p>
+<img src="{{ berita.gambar.url }}" alt="{{ berita.judul }}" />
+<p> Isi berita : {{ berita.isi_berita }}</p>
+
+<h3>Komentar:</h3>
+<ul>
+  {% for komentar in komentar_list %}
+  <li>
+    <strong>{{ komentar.nama }}</strong> ({{ komentar.tanggal }}): {{ komentar.isi_komentar }}
+  </li>
+  {% empty %}
+  <li>Tidak ada komentar.</li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'berita-list' %}">Kembali ke Daftar Berita</a>

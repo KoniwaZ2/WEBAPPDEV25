@@ -1,0 +1,9 @@
+
+{% for beritas in berita_list %}
+<div class="berita-item">
+  <h2>{{ beritas.judul }}</h2>
+  <p>Tanggal: {{ beritas.tanggal }}</p>
+  <img src="{{ beritas.gambar.url }}" alt="{{ beritas.judul }}" />
+  <p><a href="{% url 'berita-detail' pk=beritas.id %}">Lihat Detail</a></p>
+</div>
+{% endfor %}
